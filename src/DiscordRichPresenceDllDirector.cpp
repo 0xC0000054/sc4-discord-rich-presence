@@ -172,7 +172,7 @@ public:
 					std::string details("Region: ");
 					details.append(name->ToChar(), name->Strlen());
 
-					service.UpdatePresence(details.c_str());
+					service.UpdatePresence(details.c_str(), /*startElapsedTimer*/false);
 				}
 			}
 		}

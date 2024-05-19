@@ -123,6 +123,10 @@ void DiscordRichPresenceService::UpdatePresence(
 	{
 		activity.GetTimestamps().SetStart(time(nullptr));
 	}
+	else
+	{
+		activity.GetTimestamps().SetStart(0);
+	}
 
 	activityNeedsUpdate = true;
 }
