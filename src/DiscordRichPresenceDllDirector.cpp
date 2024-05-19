@@ -108,10 +108,10 @@ public:
 
 			if (pCity->GetCityName(cityName))
 			{
-				std::string largeImageTooltip("City: ");
-				largeImageTooltip.append(cityName.ToChar(), cityName.Strlen());
+				std::string details("City: ");
+				details.append(cityName.ToChar(), cityName.Strlen());
 
-				service.UpdatePresence("In City View", largeImageTooltip.c_str());
+				service.UpdatePresence(details.c_str());
 			}
 		}
 	}
@@ -169,10 +169,10 @@ public:
 
 					cIGZString* name = reinterpret_cast<cIGZString*>(reinterpret_cast<void**>(pRegion->GetName()));
 
-					std::string largeImageTooltip("Region: ");
-					largeImageTooltip.append(name->ToChar(), name->Strlen());
+					std::string details("Region: ");
+					details.append(name->ToChar(), name->Strlen());
 
-					service.UpdatePresence("In Region View", largeImageTooltip.c_str());
+					service.UpdatePresence(details.c_str());
 				}
 			}
 		}
