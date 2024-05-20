@@ -96,6 +96,11 @@ bool DiscordRichPresenceService::Shutdown()
 	return result;
 }
 
+std::string DiscordRichPresenceService::GetDetails() const
+{
+	return std::string(activity.GetDetails());
+}
+
 void DiscordRichPresenceService::UpdatePresence(
 	const char* const details,
 	bool startElapsedTimer)

@@ -26,6 +26,12 @@ public:
 	bool Shutdown() override;
 
 	/**
+	 * @brief Gets the current details string.
+	 * @return The current details string.
+	 */
+	std::string GetDetails() const;
+
+	/**
 	 * @brief Updates the Discord rich presence text.
 	 * @param details A short line shown in the user profile, Region: <name>, Building <city name>.
 	 * @param startElapsedTimer true to start Discord's elapsed timer; otherwise, false.

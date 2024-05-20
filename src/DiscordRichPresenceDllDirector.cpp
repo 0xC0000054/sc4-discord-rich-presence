@@ -188,7 +188,22 @@ public:
 			}
 			else
 			{
-				service.UpdatePresence("In God Mode");
+				std::string details("Establishing City");
+
+				// Append the region name to the establishing city text.
+				// The final string will use the form: Establishing City in <Region name>.
+
+				const std::string regionDetailsText = service.GetDetails();
+
+				if (regionDetailsText.starts_with("Region: "))
+				{
+					// Trim the Region: prefix and the space that follows it.
+					const std::string_view regionName = std::string_view(regionDetailsText).substr(8);
+
+					details.append(" in ").append(regionName);
+				}
+
+				service.UpdatePresence(details.c_str(), /*startElapsedTimer*/false);
 			}
 		}
 	}
