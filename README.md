@@ -38,7 +38,7 @@ See [LICENSE.txt](LICENSE.txt) for more information.
 [gzcom-dll](https://github.com/nsgomez/gzcom-dll/tree/master) Located in the vendor folder, MIT License.    
 [EABase](https://github.com/electronicarts/EABase) Located in the vendor folder, BSD 3-Clause License.    
 [EASTL](https://github.com/electronicarts/EASTL) Located in the vendor folder, BSD 3-Clause License.    
-[Windows Implementation Library](https://github.com/microsoft/wil) - MIT License    
+[Windows Implementation Library](https://github.com/microsoft/wil) - MIT License.    
 [Discord Game SDK](https://discord.com/developers/docs/game-sdk/sdk-starter-guide) - [Discord Developer Terms of Service](https://discord.com/developers/docs/legal).    
 
 # Source Code
