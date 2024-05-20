@@ -39,22 +39,10 @@
     <ClCompile Include="ServiceBase.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cGZPersistResourceKey.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistDBRecord.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResource.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceFactory.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceManager.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4App.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4BuildingDevelopmentSimulator.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4LotManager.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4NetworkOccupant.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4Occupant.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISCStringDetokenizer.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZFrameWork.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4AuraSimulator.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4City.h" />
     <ClInclude Include="..\vendor\gzcom-dll\include\cRZCOMDllDirector.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cSC4EdgeConnectionStore.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\SCPropertyUtil.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceKey.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceManager.h" />
     <ClInclude Include="DebugUtil.h" />
     <ClInclude Include="DiscordRichPresenceService.h" />
     <ClInclude Include="FileSystem.h" />

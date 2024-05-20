@@ -27,7 +27,7 @@ public:
 
 	/**
 	 * @brief Updates the Discord rich presence text.
-	 * @param details A short line shown in the user profile, In Region View, In City View, etc.
+	 * @param details A short line shown in the user profile, Region: <name>, Building <city name>.
 	 * @param startElapsedTimer true to start Discord's elapsed timer; otherwise, false.
 	 */
 	void UpdatePresence(
@@ -36,14 +36,20 @@ public:
 
 	/**
 	 * @brief Updates the Discord rich presence text.
-	 * @param details A short line shown in the user profile, In Region View, In City View, etc.
-	 * @param largeImageToolTip Additional context for the details line, region name, city name, etc.
+	 * @param details A short line shown in the user profile, Region: <name>, Building <city name>.
+	 * @param state Additional context for the details line, region size, mayor rating, etc.
 	 * @param startElapsedTimer true to start Discord's elapsed timer; otherwise, false.
 	 */
 	void UpdatePresence(
 		const char* const details,
-		const char* const largeImageToolTip,
+		const char* const state,
 		bool startElapsedTimer = true);
+
+	/**
+	 * @brief Updates the Discord rich presence status text.
+	 * @param state This line is used for items like region size, mayor rating, etc.
+	 */
+	void UpdateState(const char* const state);
 
 private:
 	bool OnIdle(uint32_t unknown1) override;

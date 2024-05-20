@@ -110,33 +110,6 @@
     <ClInclude Include="version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceKey.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceManager.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4App.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistDBRecord.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cGZPersistResourceKey.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceManager.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResource.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceFactory.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\SCPropertyUtil.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
     <ClInclude Include="..\vendor\gzcom-dll\include\cRZCOMDllDirector.h">
       <Filter>Header Files\GZCOM</Filter>
     </ClInclude>
@@ -146,29 +119,20 @@
     <ClInclude Include="DebugUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISCStringDetokenizer.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4Occupant.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4NetworkOccupant.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4LotManager.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4BuildingDevelopmentSimulator.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cSC4EdgeConnectionStore.h">
-      <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
     <ClInclude Include="DiscordRichPresenceService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ServiceBase.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZFrameWork.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4City.h">
+      <Filter>Header Files\GZCOM</Filter>
+    </ClInclude>
+    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4AuraSimulator.h">
+      <Filter>Header Files\GZCOM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

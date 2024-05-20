@@ -105,18 +105,18 @@ void DiscordRichPresenceService::UpdatePresence(
 
 void DiscordRichPresenceService::UpdatePresence(
 	const char* const details,
-	const char* const largeImageToolTip,
+	const char* const state,
 	bool startElapsedTimer)
 {
 	activity.SetDetails(details);
 
-	if (largeImageToolTip)
+	if (state)
 	{
-		activity.GetAssets().SetLargeText(largeImageToolTip);
+		activity.SetState(state);
 	}
 	else
 	{
-		activity.GetAssets().SetLargeText("");
+		activity.SetState("");
 	}
 
 	if (startElapsedTimer)
@@ -128,6 +128,19 @@ void DiscordRichPresenceService::UpdatePresence(
 		activity.GetTimestamps().SetStart(0);
 	}
 
+	activityNeedsUpdate = true;
+}
+
+void DiscordRichPresenceService::UpdateState(const char* const state)
+{
+	if (state)
+	{
+		activity.SetState(state);
+	}
+	else
+	{
+		activity.SetState("");
+	}
 	activityNeedsUpdate = true;
 }
 

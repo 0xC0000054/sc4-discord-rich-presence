@@ -22,6 +22,7 @@
 #include "cISCProperty.h"
 #include "cISCPropertyHolder.h"
 #include "cISC4App.h"
+#include "cISC4AuraSimulator.h"
 #include "cISC4City.h"
 #include "cISC4Region.h"
 #include "GZServPtrs.h"
@@ -32,7 +33,7 @@
 #include "StringResourceManager.h"
 
 #include <algorithm>
-#include <cctype>
+#include <chrono>
 #include <filesystem>
 #include <functional>
 #include <memory>
@@ -47,6 +48,7 @@ static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
 static constexpr uint32_t kSC4MessageCityEstablished = 0x26D31EC4;
 static constexpr uint32_t kSC4MessagePostRegionInit = 0xCBB5BB45;
 static constexpr uint32_t kSC4MessagePreRegionShutdown = 0x8BB5BB46;
+static constexpr uint32_t kSC4MessageHistoryWarehouseRecordChanged = 0x89EFA536; // Same as kSC4CLSID_cSC4HistoryWarehouse
 
 using namespace std::string_view_literals;
 
@@ -57,6 +59,7 @@ class DiscordRichPresenceDllDirector final : public cRZMessage2COMDirector
 public:
 	DiscordRichPresenceDllDirector()
 		: service(),
+		  lastMayorRating(0),
 		  serviceInitialized(false),
 		  serviceAddedToFramework(false),
 		  serviceAddedToOnIdle(false),
@@ -95,23 +98,39 @@ public:
 		case kSC4MessagePreRegionShutdown:
 			PreRegionShutdown();
 			break;
+		case kSC4MessageHistoryWarehouseRecordChanged:
+			HistoryWarehouseRecordChanged(pStandardMsg);
+			break;
 		}
 
 		return true;
 	}
 
-	void SetInCityViewStatus(cISC4City* pCity)
+	void SetCityViewPresence(cISC4City* pCity)
 	{
 		if (pCity)
 		{
 			cRZBaseString cityName;
+			const cISC4AuraSimulator* pAuraSim = pCity->GetAuraSimulator();
 
-			if (pCity->GetCityName(cityName))
+			if (pCity->GetCityName(cityName) && pAuraSim)
 			{
 				std::string details("City: ");
 				details.append(cityName.ToChar(), cityName.Strlen());
 
-				service.UpdatePresence(details.c_str());
+				char stateBuffer[1024]{};
+
+				int8_t mayorRating = pAuraSim->GetMayorRating();
+
+				std::snprintf(
+					stateBuffer,
+					sizeof(stateBuffer),
+					"Mayor Rating: %d",
+					mayorRating);
+				lastMayorRating = mayorRating;
+				mayorRatingLastUpdateTime = std::chrono::system_clock::now();
+
+				service.UpdatePresence(details.c_str(), stateBuffer);
 			}
 		}
 	}
@@ -122,7 +141,38 @@ public:
 
 		if (pSC4App)
 		{
-			SetInCityViewStatus(pSC4App->GetCity());
+			SetCityViewPresence(pSC4App->GetCity());
+		}
+	}
+
+	void HistoryWarehouseRecordChanged(cIGZMessage2Standard* pStandardMsg)
+	{
+		constexpr uint32_t kMayorRating = 0x0A5CBF37;
+
+		const uint32_t id = static_cast<uint32_t>(pStandardMsg->GetData1());
+
+		if (id == kMayorRating)
+		{
+			int32_t value = static_cast<int32_t>(pStandardMsg->GetData2());
+
+			if (lastMayorRating != value)
+			{
+				lastMayorRating = value;
+
+				// We only update the displayed mayor rating once every 10 seconds.
+				if ((std::chrono::system_clock::now() - mayorRatingLastUpdateTime) > std::chrono::seconds(10))
+				{
+					char buffer[1024]{};
+
+					std::snprintf(
+						buffer,
+						sizeof(buffer),
+						"Mayor Rating: %d",
+						value);
+
+					service.UpdateState(buffer);
+				}
+			}
 		}
 	}
 
@@ -134,7 +184,7 @@ public:
 		{
 			if (pCity->GetEstablished())
 			{
-				SetInCityViewStatus(pCity);
+				SetCityViewPresence(pCity);
 			}
 			else
 			{
@@ -228,6 +278,7 @@ public:
 				requiredNotifications.push_back(kSC4MessagePostCityInit);
 				requiredNotifications.push_back(kSC4MessagePostRegionInit);
 				requiredNotifications.push_back(kSC4MessagePreRegionShutdown);
+				requiredNotifications.push_back(kSC4MessageHistoryWarehouseRecordChanged);
 
 				for (uint32_t messageID : requiredNotifications)
 				{
@@ -268,6 +319,8 @@ public:
 private:
 
 	DiscordRichPresenceService service;
+	std::chrono::time_point<std::chrono::system_clock> mayorRatingLastUpdateTime;
+	int32_t lastMayorRating;
 	bool serviceInitialized;
 	bool serviceAddedToFramework;
 	bool serviceAddedToOnIdle;
