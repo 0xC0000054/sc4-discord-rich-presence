@@ -25,6 +25,9 @@ The plugin may work on Windows 7 or later with the [Microsoft Visual C++ 2022 x8
 The plugin should write a `SC4DiscordRichPresence.log` file in the same folder as the plugin.    
 The log contains status information for the most recent run of the plugin.
 
+If the log file was not created, ensure that `discord_game_sdk.dll` is in the `Apps` folder next to `SimCity 4.exe`
+and that the Microsoft Visual C++ 2022 x86 Redistribute has been installed.
+
 # License
 
 This project is licensed under the terms of the MIT License.    
