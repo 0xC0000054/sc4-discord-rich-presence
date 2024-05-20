@@ -2,10 +2,17 @@
 
 A DLL plugin for SimCity 4 that implements Discord rich presence support.
 
-The Rich Presence integration shows whether the player is in the city or region view with the elapsed time.
-The name of the city or region is shown as the tool tip of the SC4 image.
+In the city view, the plugin displays the city name, mayor rating and elapsed time.
 
-![RichPresence preview](images/RichPresence.png)
+![City view](images/CityView.png)
+
+In the region view, the plugin displays the region name.
+
+![Region view](images/RegionView.png)
+
+When establishing a city, the plugin displays Establishing City in region name.
+
+![Establishing city](images/EstablishCity.png)
 
 ## System Requirements
 
