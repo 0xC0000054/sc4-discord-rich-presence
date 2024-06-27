@@ -115,7 +115,7 @@ public:
 
 			if (pCity->GetCityName(cityName) && pAuraSim)
 			{
-				std::string details("Building ");
+				std::string details("City: ");
 				details.append(cityName.ToChar(), cityName.Strlen());
 
 				char stateBuffer[1024]{};
