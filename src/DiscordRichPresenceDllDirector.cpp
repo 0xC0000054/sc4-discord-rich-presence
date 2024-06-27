@@ -264,10 +264,8 @@ public:
 		return true;
 	}
 
-	bool PostAppInit()
+	bool PreAppInit()
 	{
-		Logger& logger = Logger::GetInstance();
-
 		serviceInitialized = service.Init();
 
 		if (serviceInitialized)
@@ -281,6 +279,13 @@ public:
 				serviceAddedToOnIdle = pFramework->AddToOnIdle(&service);
 			}
 		}
+
+		return true;
+	}
+
+	bool PostAppInit()
+	{
+		Logger& logger = Logger::GetInstance();
 
 		if (serviceAddedToOnIdle)
 		{
