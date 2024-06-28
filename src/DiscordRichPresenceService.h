@@ -13,6 +13,7 @@
 #pragma once
 #include "ServiceBase.h"
 #include "CityStatusProvider.h"
+#include "RegionStatusProvider.h"
 #include "cIGZMessageTarget2.h"
 #include "discord-game-sdk/discord.h"
 #include <atomic>
@@ -49,6 +50,17 @@ private:
 		TotalFunds,
 	};
 
+	enum class RegionStatusType
+	{
+		TotalResidentialPopulation,
+		TotalCommercialJobs,
+		TotalIndustrialJobs,
+		TotalFunds,
+		TotalCities,
+		DevelopedCityCount,
+		UndevelopedCityCount,
+	};
+
 	enum class DiscordView : int32_t
 	{
 		Unknown,
@@ -77,6 +89,8 @@ private:
 
 	void SetCityStatusText();
 
+	void SetRegionStatusText();
+
 	void SetCityViewPresence(cISC4City* pCity);
 
 	void UpdateCityName(cISC4City*);
@@ -89,7 +103,9 @@ private:
 	std::chrono::time_point<std::chrono::system_clock> statusLastUpdateTime;
 	std::atomic_bool activityNeedsUpdate;
 	CityStatusProvider cityStatusProvider;
+	RegionStatusProvider regionStatusProvider;
 	CityStatusType currentCityStatus;
+	RegionStatusType currentRegionStatus;
 	std::atomic<DiscordView> view;
 	cIGZLanguageUtility* pLanguageUtility;
 };

@@ -37,6 +37,7 @@
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="DiscordRichPresenceDllDirector.cpp" />
+    <ClCompile Include="RegionStatusProvider.cpp" />
     <ClCompile Include="ServiceBase.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +50,7 @@
     <ClInclude Include="CityStatusProvider.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="RegionStatusProvider.h" />
     <ClInclude Include="ServiceBase.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>

@@ -1,5 +1,6 @@
 #pragma once
 #include "cIGZUnknown.h"
+#include "SC4Percentage.h"
 #include "EASTLConfigSC4.h"
 #include "EASTL\vector.h"
 #include <list>
@@ -25,9 +26,9 @@ class cISC4RegionalCity : public cIGZUnknown
 		virtual int32_t GetPopulation(void) = 0;
 		virtual int32_t GetCommercialJobs(void) = 0;
 		virtual int32_t GetIndustrialJobs(void) = 0;
-		virtual float GetWorkforcePercentage(void) = 0;
+		virtual SC4Percentage* GetWorkforcePercentage(void) = 0;
 
-		virtual int32_t GetMayorRating(void) = 0;
+		virtual int8_t GetMayorRating(void) = 0;
 		virtual int32_t GetDifficultyLevel(void) = 0;
 		virtual float GetTaxRate(uint32_t dwTaxType) = 0;
 

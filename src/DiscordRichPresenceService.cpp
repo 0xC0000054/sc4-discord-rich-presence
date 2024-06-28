@@ -66,6 +66,7 @@ DiscordRichPresenceService::DiscordRichPresenceService()
 	  statusLastUpdateTime(),
 	  activityNeedsUpdate(false),
 	  currentCityStatus(CityStatusType::MayorName),
+	  currentRegionStatus(RegionStatusType::TotalResidentialPopulation),
 	  view(DiscordView::Unknown),
 	  pLanguageUtility(nullptr)
 {
@@ -313,7 +314,10 @@ void DiscordRichPresenceService::PostRegionInit()
 				details.append(name->ToChar(), name->Strlen());
 
 				activity.SetDetails(details.c_str());
-				activity.SetState("");
+
+				regionStatusProvider.SetupRegionStatusData(pRegion);
+				currentRegionStatus = RegionStatusType::TotalResidentialPopulation;
+				SetRegionStatusText();
 				activity.GetTimestamps().SetStart(0);
 				activityNeedsUpdate = true;
 			}
@@ -380,6 +384,67 @@ void DiscordRichPresenceService::SetCityStatusText()
 			sizeof(buffer),
 			"Total Funds: %s",
 			GetUSEnglishNumberString(cityStatusProvider.GetTotalFunds(), NumberType::Money).ToChar());
+		break;
+	}
+
+	activity.SetState(buffer);
+}
+
+void DiscordRichPresenceService::SetRegionStatusText()
+{
+	char buffer[1024]{};
+
+	switch (currentRegionStatus)
+	{
+	case RegionStatusType::TotalResidentialPopulation:
+	default:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Population: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetTotalResidentialPopulation()).ToChar());
+		break;
+	case RegionStatusType::TotalCommercialJobs:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Commercial Jobs: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetTotalCommercialJobs()).ToChar());
+		break;
+	case RegionStatusType::TotalIndustrialJobs:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Industrial Jobs: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetTotalIndustrialJobs()).ToChar());
+		break;
+	case RegionStatusType::TotalFunds:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Total Funds: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetTotalFunds(), NumberType::Money).ToChar());
+		break;
+	case RegionStatusType::TotalCities:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Total Cities: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetTotalCities()).ToChar());
+		break;
+	case RegionStatusType::DevelopedCityCount:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Developed Cities: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetDevelopedCityCount()).ToChar());
+		break;
+	case RegionStatusType::UndevelopedCityCount:
+		std::snprintf(
+			buffer,
+			sizeof(buffer),
+			"Undeveloped Cities: %s",
+			GetUSEnglishNumberString(regionStatusProvider.GetUndevelopedCityCount()).ToChar());
 		break;
 	}
 
@@ -468,6 +533,37 @@ bool DiscordRichPresenceService::OnIdle(uint32_t unknown1)
 							break;
 						}
 						SetCityStatusText();
+
+						activityNeedsUpdate = true;
+					}
+					else if (view == DiscordView::Region)
+					{
+						switch (currentRegionStatus)
+						{
+						case RegionStatusType::TotalResidentialPopulation:
+							currentRegionStatus = RegionStatusType::TotalCommercialJobs;
+							break;
+						case RegionStatusType::TotalCommercialJobs:
+							currentRegionStatus = RegionStatusType::TotalIndustrialJobs;
+							break;
+						case RegionStatusType::TotalIndustrialJobs:
+							currentRegionStatus = RegionStatusType::TotalFunds;
+							break;
+						case RegionStatusType::TotalFunds:
+							currentRegionStatus = RegionStatusType::TotalCities;
+							break;
+						case RegionStatusType::TotalCities:
+							currentRegionStatus = RegionStatusType::DevelopedCityCount;
+							break;
+						case RegionStatusType::DevelopedCityCount:
+							currentRegionStatus = RegionStatusType::UndevelopedCityCount;
+							break;
+						case RegionStatusType::UndevelopedCityCount:
+						default:
+							currentRegionStatus = RegionStatusType::TotalResidentialPopulation;
+							break;
+						}
+						SetRegionStatusText();
 
 						activityNeedsUpdate = true;
 					}
