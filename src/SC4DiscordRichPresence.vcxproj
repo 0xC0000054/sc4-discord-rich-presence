@@ -33,6 +33,7 @@
     <ClCompile Include="..\vendor\gzcom-dll\src\StringResourceManager.cpp" />
     <ClCompile Include="DebugUtil.cpp" />
     <ClCompile Include="DiscordRichPresenceService.cpp" />
+    <ClCompile Include="CityStatusProvider.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="DiscordRichPresenceDllDirector.cpp" />
@@ -45,6 +46,7 @@
     <ClInclude Include="..\vendor\gzcom-dll\include\cRZCOMDllDirector.h" />
     <ClInclude Include="DebugUtil.h" />
     <ClInclude Include="DiscordRichPresenceService.h" />
+    <ClInclude Include="CityStatusProvider.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="ServiceBase.h" />

@@ -12,58 +12,85 @@
 
 #pragma once
 #include "ServiceBase.h"
+#include "CityStatusProvider.h"
+#include "cIGZMessageTarget2.h"
 #include "discord-game-sdk/discord.h"
 #include <atomic>
 #include <chrono>
 #include <memory>
 
-class DiscordRichPresenceService final : public ServiceBase
+class cIGZLanguageUtility;
+class cIGZMessage2Standard;
+class cISC4City;
+class cISC4Region;
+
+class DiscordRichPresenceService final : public ServiceBase, private cIGZMessageTarget2
 {
 public:
 	DiscordRichPresenceService();
 
+	bool QueryInterface(uint32_t riid, void** ppvObj) override;
+	uint32_t AddRef() override;
+	uint32_t Release() override;
+
 	bool Init() override;
 	bool Shutdown() override;
 
-	/**
-	 * @brief Gets the current details string.
-	 * @return The current details string.
-	 */
-	std::string GetDetails() const;
-
-	/**
-	 * @brief Updates the Discord rich presence text.
-	 * @param details A short line shown in the user profile, Region: <name>, Building <city name>.
-	 * @param startElapsedTimer true to start Discord's elapsed timer; otherwise, false.
-	 */
-	void UpdatePresence(
-		const char* const details,
-		bool startElapsedTimer = true);
-
-	/**
-	 * @brief Updates the Discord rich presence text.
-	 * @param details A short line shown in the user profile, Region: <name>, Building <city name>.
-	 * @param state Additional context for the details line, region size, mayor rating, etc.
-	 * @param startElapsedTimer true to start Discord's elapsed timer; otherwise, false.
-	 */
-	void UpdatePresence(
-		const char* const details,
-		const char* const state,
-		bool startElapsedTimer = true);
-
-	/**
-	 * @brief Updates the Discord rich presence status text.
-	 * @param state This line is used for items like region size, mayor rating, etc.
-	 */
-	void UpdateState(const char* const state);
-
 private:
+	enum class CityStatusType : int32_t
+	{
+		MayorName,
+		MayorRating,
+		ResidentialPopulation,
+		CommercialPopulation,
+		IndustrialPopulation,
+		CityAgeInYears,
+		MonthlyNetIncome,
+		TotalFunds,
+	};
+
+	enum class DiscordView : int32_t
+	{
+		Unknown,
+		Region,
+		EstablishedCity,
+		UnestablishedCity,
+	};
+
+	enum class NumberType
+	{
+		Number,
+		Money
+	};
+
+	cRZBaseString GetUSEnglishNumberString(int64_t value, NumberType type = NumberType::Number);
+
+	bool DoMessage(cIGZMessage2* pMsg);
+
+	void CityEstablished(cIGZMessage2Standard*);
+
+	void CityNameChanged(cIGZMessage2Standard*);
+
+	void PostCityInit(cIGZMessage2Standard* pStandardMsg);
+
+	void PostRegionInit();
+
+	void SetCityStatusText();
+
+	void SetCityViewPresence(cISC4City* pCity);
+
+	void UpdateCityName(cISC4City*);
+
 	bool OnIdle(uint32_t unknown1) override;
 
 	std::unique_ptr<discord::Core> discord;
 	discord::Activity activity;
-
 	std::chrono::time_point<std::chrono::system_clock> activityLastUpdateTime;
+	std::chrono::time_point<std::chrono::system_clock> statusLastUpdateTime;
 	std::atomic_bool activityNeedsUpdate;
+	CityStatusProvider cityStatusProvider;
+	CityStatusType currentCityStatus;
+	std::atomic<DiscordView> view;
+	cIGZLanguageUtility* pLanguageUtility;
 };
 
