@@ -173,6 +173,15 @@ int64_t CityStatusProvider::GetTotalFunds() const
 
 void CityStatusProvider::SetupCityStatusData(cISC4City* pCity)
 {
+	mayorName.FromChar("");
+	residentialPopulation = 0;
+	commercialPopulation = 0;
+	industrialPopulation = 0;
+	mayorRating = 0;
+	cityAgeInYears = 0;
+	monthlyNetIncome = 0;
+	totalFunds = 0;
+
 	if (pCity)
 	{
 		pCity->GetMayorName(mayorName);
