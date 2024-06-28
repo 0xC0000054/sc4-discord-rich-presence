@@ -47,34 +47,31 @@ DiscordRichPresenceService::DiscordRichPresenceService()
 
 bool DiscordRichPresenceService::Init()
 {
-	bool result = ServiceBase::Init();
+	bool result = true;
 
-	if (result)
+	discord::Core* instance = nullptr;
+
+	discord::Result discordStatus = discord::Core::Create(APPLICATION_ID, DiscordCreateFlags_NoRequireDiscord, &instance);
+
+	if (discordStatus == discord::Result::Ok)
 	{
-		discord::Core* instance = nullptr;
-
-		discord::Result discordStatus = discord::Core::Create(APPLICATION_ID, DiscordCreateFlags_NoRequireDiscord, &instance);
-
-		if (discordStatus == discord::Result::Ok)
-		{
-			discord.reset(instance);
+		discord.reset(instance);
 
 #ifdef _DEBUG
-			discord->SetLogHook(discord::LogLevel::Debug, DebugLogHook);
+		discord->SetLogHook(discord::LogLevel::Debug, DebugLogHook);
 #endif // _DEBUG
 
-			activity.GetAssets().SetLargeImage("sc4_icon_1024");
-			activity.SetType(discord::ActivityType::Playing);
+		activity.GetAssets().SetLargeImage("sc4_icon_1024");
+		activity.SetType(discord::ActivityType::Playing);
 
-			// Set the user's status to Playing.
-			activityLastUpdateTime = std::chrono::system_clock::now();
-			discord->ActivityManager().UpdateActivity(activity, DiscordAPICallback);
-			result = discord->RunCallbacks() == discord::Result::Ok;
-		}
-		else
-		{
-			result = false;
-		}
+		// Set the user's status to Playing.
+		activityLastUpdateTime = std::chrono::system_clock::now();
+		discord->ActivityManager().UpdateActivity(activity, DiscordAPICallback);
+		result = discord->RunCallbacks() == discord::Result::Ok;
+	}
+	else
+	{
+		result = false;
 	}
 
 	return result;
@@ -82,18 +79,13 @@ bool DiscordRichPresenceService::Init()
 
 bool DiscordRichPresenceService::Shutdown()
 {
-	bool result = ServiceBase::Shutdown();
-
-	if (result)
+	if (discord)
 	{
-		if (discord)
-		{
-			discord->ActivityManager().ClearActivity(DiscordAPICallback);
-			discord->RunCallbacks();
-		}
+		discord->ActivityManager().ClearActivity(DiscordAPICallback);
+		discord->RunCallbacks();
 	}
 
-	return result;
+	return true;
 }
 
 std::string DiscordRichPresenceService::GetDetails() const

@@ -57,16 +57,6 @@ uint32_t ServiceBase::Release()
 	return refCount;
 }
 
-bool ServiceBase::Init()
-{
-	return true;
-}
-
-bool ServiceBase::Shutdown()
-{
-	return true;
-}
-
 uint32_t ServiceBase::GetServiceID()
 {
 	return serviceID;
