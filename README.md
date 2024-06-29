@@ -2,11 +2,11 @@
 
 A DLL plugin for SimCity 4 that implements Discord rich presence support.
 
-In the city view, the plugin displays the city name, mayor rating and elapsed time.
+In the city view, the plugin displays the city name, various city statistics and the elapsed time.
 
 ![City view](images/CityView.png)
 
-In the region view, the plugin displays the region name.
+In the region view, the plugin displays the region name and various region statistics.
 
 ![Region view](images/RegionView.png)
 
