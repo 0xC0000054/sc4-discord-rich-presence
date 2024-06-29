@@ -331,11 +331,11 @@ void DiscordRichPresenceService::SetCityStatusText()
 
 	switch (currentCityStatus)
 	{
-	case DiscordRichPresenceService::CityStatusType::MayorName:
+	case CityStatusType::MayorName:
 	default:
 		std::snprintf(buffer, sizeof(buffer), "Mayor: %s", cityStatusProvider.GetMayorName().ToChar());
 		break;
-	case DiscordRichPresenceService::CityStatusType::MayorRating:
+	case CityStatusType::MayorRating:
 		std::snprintf(
 			buffer,
 			sizeof(buffer),
@@ -364,21 +364,21 @@ void DiscordRichPresenceService::SetCityStatusText()
 			GetUSEnglishNumberString(cityStatusProvider.GetIndustrialPopulation()).ToChar());
 		break;
 
-	case DiscordRichPresenceService::CityStatusType::CityAgeInYears:
+	case CityStatusType::CityAgeInYears:
 		std::snprintf(
 			buffer,
 			sizeof(buffer),
 			"City Age in Years: %s",
 			GetUSEnglishNumberString(cityStatusProvider.GetCityAgeInYears()).ToChar());
 		break;
-	case DiscordRichPresenceService::CityStatusType::MonthlyNetIncome:
+	case CityStatusType::MonthlyNetIncome:
 		std::snprintf(
 			buffer,
 			sizeof(buffer),
 			"Monthly Net Income: %s",
 			GetUSEnglishNumberString(cityStatusProvider.GetMonthlyNetIncome(), NumberType::Money).ToChar());
 		break;
-	case DiscordRichPresenceService::CityStatusType::TotalFunds:
+	case CityStatusType::TotalFunds:
 		std::snprintf(
 			buffer,
 			sizeof(buffer),
