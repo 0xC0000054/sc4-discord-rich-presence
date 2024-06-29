@@ -14,6 +14,30 @@ When establishing a city, the plugin displays Establishing City in region name.
 
 ![Establishing city](images/EstablishCity.png)
 
+The city and region statistics are changed at approximately 30 second intervals and include the following values.
+
+**City Statistics**
+
+* Mayor name
+* Mayor rating
+* Residential population
+* Commercial population
+* Industrial population
+* City age in years
+* Monthly net income
+* Total funds
+
+**Region Statistics**
+
+* Population
+* Commercial jobs
+* Industrial jobs
+* Total funds
+* Total cities
+* Developed city count
+* Undeveloped city count
+
+
 ## System Requirements
 
 * Windows 10 or later
